@@ -1,4 +1,4 @@
-package com.company;
+package com.company.session1;
 
 import java.util.Scanner;
 

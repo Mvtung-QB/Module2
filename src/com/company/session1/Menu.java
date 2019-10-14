@@ -1,4 +1,4 @@
-package com.company;
+package com.company.session1;
 import com.sun.xml.internal.ws.addressing.WsaActionUtil;
 
 import  java.util.*;
