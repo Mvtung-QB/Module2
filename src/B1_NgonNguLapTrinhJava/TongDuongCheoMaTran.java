@@ -1,4 +1,4 @@
-package B2_MangVaPhuongThuc;
+package B1_NgonNguLapTrinhJava;
 
 import java.util.Scanner;
 
