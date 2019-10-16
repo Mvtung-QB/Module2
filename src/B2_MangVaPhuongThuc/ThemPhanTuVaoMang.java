@@ -12,9 +12,7 @@ public class ThemPhanTuVaoMang {
                 arr[i]=sc.nextInt();
             }
         //in mang
-        for (int i=0;i<10;i++){
-            System.out.print(arr[i]+" ");
-        }
+        System.out.println(Arrays.toString(arr));//in mang arr
         System.out.println("enter element");
         int element= sc.nextInt();
         int i;
@@ -29,7 +27,7 @@ public class ThemPhanTuVaoMang {
                 int value= newArr[newArr.length-2];
                     newArr[newArr.length-2]=element;
                     newArr[newArr.length-1]=value;
-                System.out.println(Arrays.toString(newArr));//in mang arr
+                System.out.println(Arrays.toString(newArr));//in mang newarr
             }
         }else {
             for (int j = 0; j < newArr.length; j++) {
