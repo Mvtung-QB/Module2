@@ -32,16 +32,19 @@ class Rectangle {
     public int getArea() {
         return this.height * this.weight;
     }
-    public int getPerimeter(){
-        return (this.height + this.weight) *2;
+
+    public int getPerimeter() {
+        return (this.height + this.weight) * 2;
     }
-    public void display(){
-        System.out.println("Dien tich: "+ getArea()+ " Chu Vi: "+ getPerimeter());
+
+    public void display() {
+        System.out.println("Dien tich: " + getArea() + " Chu Vi: " + getPerimeter());
     }
 }
-public class LopHinhChuNhat{
+
+public class LopHinhChuNhat {
     public static void main(String[] args) {
-        Rectangle r= new Rectangle(10,15);
+        Rectangle r = new Rectangle(10, 15);
         r.display();
     }
 }
