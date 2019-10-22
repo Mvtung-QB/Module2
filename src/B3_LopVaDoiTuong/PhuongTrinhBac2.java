@@ -69,10 +69,10 @@ class QuadraticEquation {
     }
 
     public double getX1() {
-        return (-1 * this.b - Math.sqrt(getDiscriminant())) / 2 * this.a;
+        return (-1 * this.b - Math.sqrt(getDiscriminant())) /( 2 * this.a);
     }
 
     public double getX2() {
-        return (-1 * this.b + Math.sqrt(getDiscriminant())) / 2 * this.a;
+        return (-1 * this.b + Math.sqrt(getDiscriminant())) / (2 * this.a);
     }
 }

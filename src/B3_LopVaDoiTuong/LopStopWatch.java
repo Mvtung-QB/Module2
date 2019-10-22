@@ -1,6 +1,5 @@
 package B3_LopVaDoiTuong;
 
-
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Random;
@@ -8,9 +7,9 @@ import java.util.Random;
 public class LopStopWatch {
     public static Integer[] createRandom() {
         Random rd = new Random();
-        Integer[] arr = new Integer[100];
+        Integer[] arr = new Integer[100000];
         System.out.println("Danh sách phần tử của mảng: " );
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100000; i++) {
             arr[i] = rd.nextInt(100);
             System.out.print(arr[i]+ " ");
         }
@@ -30,7 +29,6 @@ public class LopStopWatch {
         st.stop();
         System.out.println("time = "+ st.getElapsedTime());
     }
-
 }
 class StopWatch{
     private Date startTime, endTime;

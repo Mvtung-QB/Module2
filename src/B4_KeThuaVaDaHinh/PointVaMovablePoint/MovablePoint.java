@@ -1,5 +1,7 @@
 package B4_KeThuaVaDaHinh.PointVaMovablePoint;
 
+import java.util.Arrays;
+
 public class MovablePoint extends Point {
     private float xSpeed = 0.0f;
     private float ySpeed = 0.0f;
@@ -56,6 +58,6 @@ public class MovablePoint extends Point {
 
     @Override
     public String toString() {
-        return " Speed = (" + getX() + "," + getY() + ")";
+        return super.toString()+"  Speed = " + Arrays.toString(getSpeed()) ;
     }
 }

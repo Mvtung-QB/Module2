@@ -1,0 +1,8 @@
+package B5_AdvancedObjectOrientedDesign.EnimalCassAndInterfaceEdible;
+
+public class Orange extends Fruit {
+    @Override
+    public String howToEat() {
+        return "Orange could be juiced";
+    }
+}
