@@ -22,10 +22,8 @@ public class Main {
         for (Circle circle : circles) {
             System.out.println(circle);
         }
-
-
-        CircleComparator circleComparator = new CircleComparator();
-        circleComparator.sortCircle(circles);
+        Comparable circleComparator = new CircleComparator();
+        ((CircleComparator)circleComparator).sortCircle(circles);
         System.out.println("After-sorted:");
         for (Circle circle : circles) {
             System.out.println(circle);
@@ -43,7 +41,8 @@ public class Main {
         for (Rectangle r : rectangle) {
             System.out.println(r);
         }
-        circleComparator.sortRectanger(rectangle);
+
+        ((CircleComparator)circleComparator).sortRectanger(rectangle);
         System.out.println("After-sorted:");
         for (Rectangle r : rectangle) {
             System.out.println(r);
@@ -61,7 +60,7 @@ public class Main {
         for (Square r : square) {
             System.out.println(r);
         }
-        circleComparator.sortSquare(square);
+        ((CircleComparator)circleComparator).sortSquare(square);
         System.out.println("After-sorted:");
         for (Square r : square) {
             System.out.println(r);

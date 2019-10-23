@@ -26,6 +26,6 @@ public class Main {
         }
     }
     public static int rd(){
-        return (int)Math.random()*100 +1;
+        return (int)Math.random()*(100 +1);
     }
 }
