@@ -1,5 +1,7 @@
 package B6_CauTrucDuLieuVaGiaiThuat.TrienKhaiArrayList;
 
+import java.util.ArrayList;
+
 public class MyListTest{
     public static void main(String[] args) {
         MyList<String>  myList= new MyList<>();
@@ -8,11 +10,12 @@ public class MyListTest{
         myList.add(2,"C");
         myList.add(3,"D");
         myList.add(4,"E");
+        myList.add(2,"K");
         myList.printList();
-        System.out.println(myList.remove(3));
-        myList.printList();
-        myList.clear();
-        System.out.println("+++++++sau khi clear");
-        myList.printList();
+        System.out.println("+++++++sau khi ");
+        System.out.println(myList.indexOf(""));
+//        myList.clear();
+//        System.out.println("+++++++sau khi clear");
+//        myList.printList();
     }
 }

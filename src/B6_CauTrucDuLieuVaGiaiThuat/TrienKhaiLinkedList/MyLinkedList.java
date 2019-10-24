@@ -1,6 +1,8 @@
 package B6_CauTrucDuLieuVaGiaiThuat.TrienKhaiLinkedList;
 
-public class MyLinkedList {
+import java.util.LinkedList;
+
+public class MyLinkedList<E> {
     private class Node {
         private Node next;
         private Object data;
@@ -46,6 +48,21 @@ public class MyLinkedList {
             temp = temp.next;
         }
         return temp;
+    }
+
+    public E remove(int index) {
+        if (index < 0 || index > numNode) {
+            throw  new IndexOutOfBoundsException("index invalid");
+        }
+        Node temp = this.head;
+        Node holder;
+        for (int i = 0; i < index  && temp.next != null; i++) {
+            temp = temp.next;
+        }
+        holder = temp.next;
+
+        numNode--;
+        return (E) holder;
     }
 
     public Object getData(Node node) {
