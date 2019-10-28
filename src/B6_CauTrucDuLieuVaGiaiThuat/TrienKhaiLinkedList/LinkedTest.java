@@ -8,9 +8,8 @@ public class LinkedTest {
         myLinked.add(2,"c");
         myLinked.add(3,"d");
         myLinked.printList();
-        myLinked.addFirt("tung");
-        myLinked.addLast("sadasd");
         System.out.println();
+        System.out.println(myLinked.remove("d"));
         myLinked.printList();
     }
 }

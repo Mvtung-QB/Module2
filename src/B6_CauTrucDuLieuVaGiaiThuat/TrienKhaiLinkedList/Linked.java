@@ -52,18 +52,67 @@ public class Linked<E> {
         numNodes++;
     }
 
-    public void addLast(E element){
-        Node temp= head ;
-        if (head== null){
-            head= temp;
-        }else {
-            for (int i = 0; i <numNodes-1 ; i++) {
-                temp=temp.next;
+    public void addLast(E element) {
+        Node temp = head;
+        if (head == null) {
+            head = temp;
+        } else {
+            for (int i = 0; i < numNodes - 1; i++) {
+                temp = temp.next;
             }
             Node newNode = new Node(element);
-            temp.next=newNode;
+            temp.next = newNode;
         }
         numNodes++;
+    }
+
+    public E remove(int index) {
+        if (index < 0 || index > numNodes - 1) {
+            throw new IndexOutOfBoundsException("index invalid");
+        }
+        Node temp = head;
+        Node holder;
+        // neu index bang 0 thi remove head
+        if (index == 0) {
+            head = head.next;
+            numNodes--;
+            return (E) temp.data;
+        }
+        // neu index bang numNode-1 thi remove phan tu cuoi cung
+        if (index == numNodes - 1) {
+            for (int i = 0; i < numNodes - 2; i++) {
+                temp = temp.next;
+            }
+            holder = temp.next;
+            temp.next = null;
+            numNodes --;
+            return (E) holder.data;
+        }
+        //remove o giua Linked
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp.next;
+        }
+        holder = temp.next;
+        temp.next = temp.next.next;
+        numNodes --;
+        return (E) holder.data;
+
+    }
+
+    public boolean remove(E object) {
+        boolean isRemove = false;
+        Node holder = head;
+        Node temp = head;
+        E a;
+        for (int i = 0; i < numNodes - 1; i++) {
+            if (object.equals(holder.data)) {
+               a=  remove(i);
+                numNodes--;
+                isRemove = true;
+            }
+            temp = temp.next;
+        }
+        return isRemove;
     }
 
     public void printList() {
