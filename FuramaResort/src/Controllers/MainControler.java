@@ -7,6 +7,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.Regex;
 import java.awt.*;
 import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -17,9 +18,13 @@ public class MainControler {
     ArrayList<Services> arrayHouse = new ArrayList<>();
     ArrayList<Services> arrayRoom = new ArrayList<>();
     ArrayList<Customer> arrayCustumer = new ArrayList<>();
-    String text = "sadsad";
     Pattern filterNameService = Pattern.compile("^([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$");
-    Pattern filteGender = Pattern.compile("^[Male|Female|Unknow]$");
+    Pattern filteGender = Pattern.compile("^\\bMale|\\bFemale|\\bUnknow$");
+    Pattern filteBirthday = Pattern.compile("^[0-3]?[0-9]/[0-3]?[0-9]/(?:[0-9]{2})?[0-9]{2}$");
+    Pattern filteIdCard = Pattern.compile("^[0-9]{9}$");
+    Pattern filtePhoneNumber = Pattern.compile("^[0-9]{9}$");
+    Pattern filteService = Pattern.compile("^\\bVilla|\\bHouse|\bbRoom$");
+    Pattern filteEmail = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
     Matcher matcher;
 
     public void displayMainMenu() {
@@ -42,13 +47,13 @@ public class MainControler {
                 ShowServies();
                 break;
             case 3:
-                System.exit(0);
-            case 4:
                 addNewCustumer();
                 break;
-            case 5:
+            case 4:
                 showInfomationCustumer();
                 break;
+            case 5:
+                System.exit(0);
             default:
                 System.out.println("Chọn lại ");
                 displayMainMenu();
@@ -59,6 +64,8 @@ public class MainControler {
         Customer customer = new Customer();
         Scanner sc= new Scanner(System.in);
         String name,gender;
+        String birthday;
+        int idCard;
         customer.setId(UUID.randomUUID().toString().replace("-", ""));
        do {
            System.out.println("Enter Name Custumer ");
@@ -71,17 +78,53 @@ public class MainControler {
            gender = sc.nextLine();
            matcher = filteGender.matcher(gender);
        } while (!matcher.find());
-       String birtherday;
-       int idCard;
+       System.out.println("Enter Address Custumer ");
+       customer.setAddress(sc.nextLine());
+       System.out.println("Enter Loai Custumer ");
+       customer.setLoại(sc.nextLine());
+       do {
+           System.out.println("Enter birthay Custumer (dd/mm/yyyy)");
+           birthday = sc.nextLine() ;
+           matcher = filteBirthday.matcher(birthday);
+       }while (!matcher.find());
+       customer.setBirtherday(birthday);
+       do {
+           System.out.println("Enter ID card");
+           idCard = sc.nextInt() ;
+           matcher = filteIdCard.matcher(idCard+"");
+       }while (!matcher.find());
+       customer.setIdCard(idCard);
        int phoneNumber;
+       do {
+           System.out.println("Enter PhoneNumber");
+           phoneNumber = sc.nextInt() ;
+           matcher = filteIdCard.matcher(phoneNumber+"");
+       }while (!matcher.find());
+       customer.setPhoneNumber(phoneNumber);
        String email;
-       String loại;
-       String address;
-       Services services;
-
-
+       do {
+           System.out.println("Enter Email Custumer");
+           email = sc.nextLine() ;
+           matcher = filteEmail.matcher(email);
+       }while (!matcher.find());
+       customer.setEmail(email);
+//       String services;
+//       do {
+//           System.out.println("Enter Service Custumer");
+//           services = sc.nextLine() ;
+//           matcher = filteService.matcher(services);
+//       }while (!matcher.find());
+       for (Customer cus: CSVWriter.readCsvFileToCustumer()) {
+           arrayCustumer.add(cus);
+       }
+       arrayCustumer.add(customer);
+       CSVWriter.writeCustumerToCsvFile(arrayCustumer);
     }
+
     public void showInfomationCustumer(){
+        for (Customer cus: CSVWriter.readCsvFileToCustumer()) {
+            System.out.println(cus.showInformation());
+        }
 
     }
 
@@ -156,9 +199,10 @@ public class MainControler {
     public void addService(Services newService) {
         newService.setId(UUID.randomUUID().toString().replace("-", ""));
         Scanner sc = new Scanner(System.in);
+        Scanner scs;
         String typeSv, nameSv;
-        float areaUse;
-        int rentCost, maxUser;
+        float areaUse = 0;
+        int rentCost = 0, maxUser = 0;
         do {
             System.out.println("Enter Type  Service ");
             typeSv = sc.nextLine();
@@ -171,19 +215,35 @@ public class MainControler {
             matcher = filterNameService.matcher(nameSv);
         } while (!matcher.find());
         newService.setNameServises(nameSv);
-        do {
-            System.out.println("Enter Area use (>30)");
-            areaUse = sc.nextFloat();
-        } while (areaUse < 30);
+        while (areaUse < 30) {
+            try {
+                System.out.println("Enter Area use (>30)");
+                scs = new Scanner(System.in);
+                areaUse = scs.nextFloat();
+            } catch (InputMismatchException e) {
+                System.out.println("Area use là số ");
+            }
+        }
         newService.setAreaUse(areaUse);
         do {
-            System.out.println("Enter Rent Costs ");
-            rentCost = sc.nextInt();
+            try {
+                System.out.println("Enter Rent Costs ");
+                scs = new Scanner(System.in);
+                rentCost = scs.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Rent Costs Là Số Dương");
+            }
         } while (rentCost < 0);
         newService.setRentalCosts(rentCost);
         do {
-            System.out.println("Enter Max User (>0 and <20");
-            maxUser = sc.nextInt();
+            try {
+                scs= new Scanner(System.in) ;
+                System.out.println("Enter Max User (>0 and <20)");
+                maxUser = scs.nextInt();
+            }catch (InputMismatchException e){
+                System.out.println("Max User là Số và (>0 and <20)");
+            }
+            
         } while (maxUser < 0 || maxUser > 20);
         newService.setMaxUser(maxUser);
     }

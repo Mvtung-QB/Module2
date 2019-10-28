@@ -119,4 +119,8 @@ public class Customer {
                 " Address " + this.getAddress() +
                 " Service " + this.getServices();
     }
+    public String showIDName(){
+        return "Name Custumer " + this.getNameCustumer() +
+                " ID Card " + this.getIdCard();
+    }
 }
