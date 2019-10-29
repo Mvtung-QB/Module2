@@ -410,6 +410,7 @@ public class MainControler {
         int i=1;
         for (Services e : CSVWriter.readCsvFileToVilla()) {
             System.out.println(i+" -  "+((Villa) e).showInfor());
+            i++;
         }
     }
 
@@ -417,6 +418,7 @@ public class MainControler {
         int i=1;
         for (Services e : CSVWriter.readCsvFileToRoom()) {
             System.out.println(i+" -  "+((Room) e).showInfor());
+            i++;
         }
     }
 
