@@ -72,7 +72,8 @@ public class MainControler {
         }
         System.out.println("Select Custumer");
         int select = new Scanner(System.in).nextInt();
-
+        bookingService(customer.get(select-1));
+        CSVWriter.writeBookingToCsvFile(customer);
     }
 
     public void bookingService(Customer customer){
