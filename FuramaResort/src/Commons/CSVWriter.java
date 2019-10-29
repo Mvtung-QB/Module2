@@ -23,6 +23,7 @@ public class CSVWriter {
     private static final String HOUSE_FILE_HEADER = "id,typeServices,nameServises,areaUse,rentalCosts,maxUser,tieuChuan,moTa,soTang";
     private static final String ROOM_FILE_HEADER = "id,typeServices,nameServises,areaUse,rentalCosts,maxUser";
     private static final String CUSTUMER_FILE_HEADER = "id,nameCustumer,gender,birtherday,idCard,phoneNumber,email,loại,address";
+    private static final String BOOKING_FILE_HEADER = "id,nameCustumer,gender,birtherday,idCard,phoneNumber,email,loại,address,typeServices,nameServises,areaUse,rentalCosts,maxUser";
 
     public static void writeVillaToCsvFile(List<Services> villa) {
         FileWriter fileWriter = null;
@@ -207,7 +208,62 @@ public class CSVWriter {
             }
         }
     }
+    public static void writeBookingToCsvFile(List<Customer> customers) {
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("src/Data/Booking.csv");
 
+            // Write the CSV file header
+            fileWriter.append(BOOKING_FILE_HEADER);
+
+            // Add a new line separator after the header
+            fileWriter.append(NEW_LINE_SEPARATOR);
+
+            // Write a new Service object list to the CSV file
+            for (Customer v : customers) {
+                fileWriter.append(String.valueOf(v.getId()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getNameCustumer());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.isGender());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getBirtherday());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(v.getIdCard()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(v.getPhoneNumber()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getEmail());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getLoại());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getAddress());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getServices().getTypeServices());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(v.getServices().getNameServises());
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(v.getServices().getAreaUse()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(v.getServices().getRentalCosts()));
+                fileWriter.append(COMMA_DELIMITER);
+                fileWriter.append(String.valueOf(v.getServices().getMaxUser()));
+                fileWriter.append(NEW_LINE_SEPARATOR);
+            }
+            System.out.println("CSV file was created successfully !!!");
+        } catch (Exception e) {
+            System.out.println("Error in CsvFileWriter !!!");
+            e.printStackTrace();
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                System.out.println("Error while flushing/closing fileWriter !!!");
+                e.printStackTrace();
+            }
+        }
+    }
     public static ArrayList<Villa> readCsvFileToVilla() {
         String[] newVillaHeader = VILLA_FILE_HEADER.split(",");
         Path path = Paths.get("src/Data/Villa.csv");
@@ -318,5 +374,33 @@ public class CSVWriter {
         }
         return (ArrayList<Customer>) csvToBean.parse();
     }
+    public static ArrayList<Customer> readCsvBooKingToCustumer() {
+        String[] newCustumerHeader = BOOKING_FILE_HEADER.split(",");
+        Path path = Paths.get("src/Data/Booking.csv");
+        if (!Files.exists(path))
+            try{
+                Writer writer = new FileWriter("src/Data/Booking.csv");
+            }catch (IOException e){
+                System.out.println(e.getMessage());
+            }
+        ColumnPositionMappingStrategy<Customer> column = new ColumnPositionMappingStrategy<>();
+        column.setType(Customer.class);
+        column.setColumnMapping(newCustumerHeader);
+        CsvToBean<Customer> csvToBean = null;
+
+        try {
+            csvToBean = new CsvToBeanBuilder<Customer>(new FileReader("src/Data/Booking.csv"))
+                    .withMappingStrategy(column)
+                    .withSeparator(COMMA_DELIMITER)
+                    .withQuoteChar('"')
+                    .withSkipLines(NUM_OF_LINE_SKIP)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return (ArrayList<Customer>) csvToBean.parse();
+    }
+
 
 }
