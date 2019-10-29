@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 public class CSVWriter {
     // Delimiter used in CSV file
@@ -422,5 +423,33 @@ public class CSVWriter {
             }
         }
         return result;
+    }
+
+    public static TreeSet<String> showNameServiceNotDuplicate(String fileName){
+        TreeSet<String> nameService = new TreeSet<>();
+        BufferedReader br = null;
+        try {
+            String line;
+            br = new BufferedReader(new FileReader(fileName));
+
+            // How to read file in java line by line?
+            while ((line = br.readLine()) != null) {
+                String[] splitData = line.split(",");
+                if (splitData[2].equals("nameServises")){
+                    continue;
+                }
+                nameService.add(splitData[2]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return nameService;
     }
 }

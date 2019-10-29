@@ -32,7 +32,8 @@ public class MainControler {
                 "\n 3.         Add New Custumer" +
                 "\n 4.         Show information Custumer" +
                 "\n 5.         Add New Booking Resort " +
-                "\n 6.         Exit");
+                "\n 6.         Show Information Employee " +
+                "\n 7.         Exit");
         Scanner sc = new Scanner(System.in);
         chooseService(sc.nextInt());
     }
@@ -54,6 +55,8 @@ public class MainControler {
             case 5:
                 addNewBooking();
             case 6:
+                showInfomationeEmployee();
+            case 7:
                 System.exit(0);
             default:
                 System.out.println("Chọn lại ");
@@ -74,6 +77,10 @@ public class MainControler {
         System.out.println("Select Custumer");
         // select custumer
         int select = new Scanner(System.in).nextInt();
+        while (select<0 || select> arrCustomer.size()){
+            System.out.println(" select >0 Vaf select <"+arrCustomer.size());
+            select = new Scanner(System.in).nextInt();
+        }
         // setService cho Custumer
         bookingService(arrCustomer.get(select - 1));
         // lay trong booking ra
@@ -95,6 +102,10 @@ public class MainControler {
                 "\n3, Booking Room");
         Scanner sc = new Scanner(System.in);
         int chooseTypeService = sc.nextInt();
+        while (chooseTypeService <0 || chooseTypeService >3){
+            System.out.println("Chon lai di");
+            chooseTypeService = sc.nextInt();
+        }
         chooseShowService(chooseTypeService);
         System.out.println("Select service booking");
         int choose = sc.nextInt();
@@ -274,16 +285,27 @@ public class MainControler {
     }
 
     public void showVillaNotDuplicate(){
-
-
+        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Villa.csv");
+        for (String name : nameVilla ) {
+            System.out.println(" "+name);
+        }
+        new Scanner(System.in).nextLine();
     }
 
     public void showHouseNotDuplicate(){
-
+        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/House.csv");
+        for (String name : nameVilla ) {
+            System.out.println(" "+name);
+        }
+        new Scanner(System.in).nextLine();
     }
 
     public void showRoomNotDuplicate(){
-
+        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Room.csv");
+        for (String name : nameVilla ) {
+            System.out.println(" "+name);
+        }
+        new Scanner(System.in).nextLine();
     }
 
     public void addService(Services newService) {
@@ -459,4 +481,36 @@ public class MainControler {
         }
     }
 
+    public void showInfomationeEmployee(){
+        Employee employee1 = new Employee("NV01","Ha",40,"Quang Binh");
+        Employee employee2 = new Employee("NV02","Ha1",40,"Quang Binh");
+        Employee employee3 = new Employee("NV03","Ha2",40,"Quang Binh");
+        Employee employee4 = new Employee("NV04","Ha3",40,"Quang Binh");
+        Employee employee5 = new Employee("NV05","Ha4",40,"Quang Binh");
+        Employee employee6 = new Employee("NV06","Ha5",40,"Quang Binh");
+        Employee employee7 = new Employee("NV07","Ha6",40,"Quang Binh");
+        Employee employee8 = new Employee("NV08","Ha7",40,"Quang Binh");
+        Employee employee9 = new Employee("NV09","Ha8",40,"Quang Binh");
+        Employee employee10 = new Employee("NV10","Ha9",40,"Quang Binh");
+        Map<String, Employee> map = new HashMap<String, Employee>();
+        map.put(employee1.getId(), employee1);
+        map.put(employee2.getId(), employee2);
+        map.put(employee3.getId(), employee3);
+        map.put(employee4.getId(), employee4);
+        map.put(employee5.getId(), employee5);
+        map.put(employee6.getId(), employee6);
+        map.put(employee7.getId(), employee7);
+        map.put(employee8.getId(), employee8);
+        map.put(employee9.getId(), employee9);
+        map.put(employee10.getId(), employee10);
+        // show map
+        Set<String> set = map.keySet();
+        for (String key : set) {
+            System.out.println(key + " " + map.get(key).getNameEmployee());
+        }
+        new Scanner(System.in).nextLine()   ;
+    }
+
+    public void buyTicket(){
+    }
 }
