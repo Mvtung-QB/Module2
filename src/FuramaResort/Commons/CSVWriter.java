@@ -208,7 +208,8 @@ public class CSVWriter {
             }
         }
     }
-    public static void writeBookingToCsvFile(Customer customers) {
+
+    public static void writeBookingToCsvFile(List<Customer> customers) {
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter("src/FuramaResort/Data/Booking.csv");
@@ -220,34 +221,38 @@ public class CSVWriter {
             fileWriter.append(NEW_LINE_SEPARATOR);
 
             // Write a new Service object list to the CSV file
-                fileWriter.append(String.valueOf(customers.getId()));
+            for (Customer customer : customers) {
+
+                //customer.setServices(new Villa());
+                fileWriter.append(String.valueOf(customer.getId()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getNameCustumer());
+                fileWriter.append(customer.getNameCustumer());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.isGender());
+                fileWriter.append(customer.isGender());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getBirtherday());
+                fileWriter.append(customer.getBirtherday());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(customers.getIdCard()));
+                fileWriter.append(String.valueOf(customer.getIdCard()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(customers.getPhoneNumber()));
+                fileWriter.append(String.valueOf(customer.getPhoneNumber()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getEmail());
+                fileWriter.append(customer.getEmail());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getLoại());
+                fileWriter.append(customer.getLoại());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getAddress());
+                fileWriter.append(customer.getAddress());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getServices().getTypeServices());
+                fileWriter.append(customer.getServices().getTypeServices());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(customers.getServices().getNameServises());
+                fileWriter.append(customer.getServices().getNameServises());
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(customers.getServices().getAreaUse()));
+                fileWriter.append(String.valueOf(customer.getServices().getAreaUse()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(customers.getServices().getRentalCosts()));
+                fileWriter.append(String.valueOf(customer.getServices().getRentalCosts()));
                 fileWriter.append(COMMA_DELIMITER);
-                fileWriter.append(String.valueOf(customers.getServices().getMaxUser()));
+                fileWriter.append(String.valueOf(customer.getServices().getMaxUser()));
                 fileWriter.append(NEW_LINE_SEPARATOR);
+            }
             System.out.println("CSV file was created successfully !!!");
         } catch (Exception e) {
             System.out.println("Error in CsvFileWriter !!!");
@@ -262,6 +267,7 @@ public class CSVWriter {
             }
         }
     }
+
     public static ArrayList<Villa> readCsvFileToVilla() {
         String[] newVillaHeader = VILLA_FILE_HEADER.split(",");
         Path path = Paths.get("src/FuramaResort/Data/Villa.csv");
@@ -292,12 +298,12 @@ public class CSVWriter {
     public static ArrayList<Room> readCsvFileToRoom() {
         String[] newVillaHeader = ROOM_FILE_HEADER.split(",");
         Path path = Paths.get("src/FuramaResort/Data/Room.csv");
-            if (!Files.exists(path))
-                try{
-                    Writer writer = new FileWriter("src/FuramaResort/Data/Room.csv");
-                }catch (IOException e){
-                    System.out.println(e.getMessage());
-                }
+        if (!Files.exists(path))
+            try {
+                Writer writer = new FileWriter("src/FuramaResort/Data/Room.csv");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         ColumnPositionMappingStrategy<Room> column = new ColumnPositionMappingStrategy<>();
         column.setType(Room.class);
         column.setColumnMapping(newVillaHeader);
@@ -320,12 +326,12 @@ public class CSVWriter {
     public static ArrayList<House> readCsvFileToHouse() {
         String[] newVillaHeader = ROOM_FILE_HEADER.split(",");
         Path path = Paths.get("src/FuramaResort/Data/House.csv");
-            if (!Files.exists(path))
-                try{
-                    Writer writer = new FileWriter("src/FuramaResort/Data/House.csv");
-                }catch (IOException e){
-                    System.out.println(e.getMessage());
-                }
+        if (!Files.exists(path))
+            try {
+                Writer writer = new FileWriter("src/FuramaResort/Data/House.csv");
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         ColumnPositionMappingStrategy<House> column = new ColumnPositionMappingStrategy<>();
         column.setType(House.class);
         column.setColumnMapping(newVillaHeader);
@@ -349,9 +355,9 @@ public class CSVWriter {
         String[] newCustumerHeader = CUSTUMER_FILE_HEADER.split(",");
         Path path = Paths.get("src/FuramaResort/Data/Custumer.csv");
         if (!Files.exists(path))
-            try{
+            try {
                 Writer writer = new FileWriter("src/FuramaResort/Data/Custumer.csv");
-            }catch (IOException e){
+            } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         ColumnPositionMappingStrategy<Customer> column = new ColumnPositionMappingStrategy<>();
@@ -372,33 +378,49 @@ public class CSVWriter {
         }
         return (ArrayList<Customer>) csvToBean.parse();
     }
-    public static ArrayList<Customer> readCsvBooKingToCustumer() {
-        String[] newCustumerHeader = BOOKING_FILE_HEADER.split(",");
-        Path path = Paths.get("src/FuramaResort/Data/Booking.csv");
-        if (!Files.exists(path))
-            try{
-                Writer writer = new FileWriter("src/FuramaResort/Data/Booking.csv");
-            }catch (IOException e){
-                System.out.println(e.getMessage());
-            }
-        ColumnPositionMappingStrategy<Customer> column = new ColumnPositionMappingStrategy<>();
-        column.setType(Customer.class);
-        column.setColumnMapping(newCustumerHeader);
-        CsvToBean<Customer> csvToBean = null;
 
+    public static ArrayList<Customer> readBookingToCustumer() {
+        BufferedReader br = null;
+        ArrayList<Customer> result = new ArrayList<Customer>();
         try {
-            csvToBean = new CsvToBeanBuilder<Customer>(new FileReader("src/FuramaResort/Data/Booking.csv"))
-                    .withMappingStrategy(column)
-                    .withSeparator(COMMA_DELIMITER)
-                    .withQuoteChar('"')
-                    .withSkipLines(NUM_OF_LINE_SKIP)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
+            String line;
+            br = new BufferedReader(new FileReader("src/FuramaResort/Data/Booking.csv"));
+
+            // How to read file in java line by line?
+            while ((line = br.readLine()) != null) {
+                String[] splitData = line.split(",");
+                if (splitData[5].equals("phoneNumber")){
+                    continue;
+                }
+                Customer customer = new Customer();
+                Villa villa = new Villa();
+                customer.setId(splitData[0]);
+                customer.setNameCustumer(splitData[1]);
+                customer.setGender(splitData[2]);
+                customer.setBirtherday(splitData[3]);
+                customer.setIdCard(Integer.parseInt(splitData[4]));
+                customer.setPhoneNumber(Integer.parseInt(splitData[5]));
+                customer.setEmail(splitData[6]);
+                customer.setLoại(splitData[7]);
+                customer.setAddress(splitData[8]);
+                villa.setTypeServices(splitData[9]);
+                villa.setNameServises(splitData[10]);
+                villa.setAreaUse(Float.parseFloat(splitData[11]));
+                villa.setRentalCosts(Integer.parseInt(splitData[12]));
+                villa.setMaxUser(Integer.parseInt(splitData[13]));
+                customer.setServices(villa);
+                result.add(customer);
+            }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null)
+                    br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return (ArrayList<Customer>) csvToBean.parse();
+        return result;
     }
-
-
 }

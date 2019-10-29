@@ -63,29 +63,36 @@ public class MainControler {
     }
 
     public void addNewBooking() {
-        ArrayList<Customer> customer = new ArrayList<>();
+        ArrayList<Customer> arrCustomer = new ArrayList<>();
         for (Customer cus : CSVWriter.readCsvFileToCustumer()) {
-            customer.add(cus);
+            arrCustomer.add(cus);
         }
-        for (int i = 0; i < customer.size() - 1; i++) {
-            System.out.println((i + 1) + ", " + customer.get(i).showInformation());
+        for (int i = 0; i < arrCustomer.size(); i++) {
+            System.out.println((i + 1) + ", " + arrCustomer.get(i).showInformation());
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++");
         }
         System.out.println("Select Custumer");
+        // select custumer
         int select = new Scanner(System.in).nextInt();
-        bookingService(customer.get(select - 1));
-        for (Customer element : CSVWriter.readCsvBooKingToCustumer()) {
+        // setService cho Custumer
+        bookingService(arrCustomer.get(select - 1));
+        // lay trong booking ra
+        for (Customer element : CSVWriter.readBookingToCustumer()) {
             arrayBooking.add(element);
         }
-        CSVWriter.writeBookingToCsvFile(customer.get(select-1));
+        arrayBooking.add(arrCustomer.get(select - 1));
+        //Viet lai vao booking
+        CSVWriter.writeBookingToCsvFile(arrayBooking);
 
+        new Scanner(System.in).nextLine();
+        displayMainMenu();
     }
 
     public void bookingService(Customer customer) {
         System.out.println("-------Booking Service----------" +
                 "\n1, Booking Villa" +
                 "\n2, Booking House" +
-                "\n3, Booking Room" );
+                "\n3, Booking Room");
         Scanner sc = new Scanner(System.in);
         int chooseTypeService = sc.nextInt();
         chooseShowService(chooseTypeService);
@@ -121,6 +128,7 @@ public class MainControler {
             matcher = filteGender.matcher(gender);
         } while (!matcher.find());
         customer.setGender(gender);
+
         System.out.println("Enter Address Custumer ");
         customer.setAddress(sc.nextLine());
         System.out.println("Enter Loai Custumer ");
@@ -145,6 +153,7 @@ public class MainControler {
         } while (!matcher.find());
         customer.setPhoneNumber(phoneNumber);
         String email;
+        sc.nextLine();
         do {
             System.out.println("Enter Email Custumer");
             email = sc.nextLine();
@@ -220,11 +229,14 @@ public class MainControler {
 
     public void ShowServies() {
         System.out.println("=======// Show Service //=======\n" +
-                "1. Show Villa\n" +
-                "2. Show House\n" +
-                "3. Show Room\n" +
-                "4. Back to menu\n" +
-                "5. Exit\n");
+                "1. Show All Villa\n" +
+                "2. Show All House\n" +
+                "3. Show All Room\n" +
+                "4. Show All Name Villa Not Duplicate\n" +
+                "5. Show All Name House Not Duplicate\n" +
+                "6. Show All Name Room Not Duplicate\n" +
+                "7. Back to menu\n" +
+                "8. Exit\n");
         Scanner sc = new Scanner(System.in);
         chooseShowService(sc.nextInt());
     }
@@ -241,15 +253,37 @@ public class MainControler {
                 printArrRoom();
                 break;
             case 4:
-                displayMainMenu();
+                showVillaNotDuplicate();
                 break;
             case 5:
+                showHouseNotDuplicate();
+                break;
+            case 6:
+                showRoomNotDuplicate();
+                break;
+            case 7:
+                displayMainMenu();
+                break;
+            case 8:
                 System.exit(0);
                 break;
             default:
                 System.out.println(" Chon sai trở lại main menu");
                 break;
         }
+    }
+
+    public void showVillaNotDuplicate(){
+
+
+    }
+
+    public void showHouseNotDuplicate(){
+
+    }
+
+    public void showRoomNotDuplicate(){
+
     }
 
     public void addService(Services newService) {
