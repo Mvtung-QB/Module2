@@ -33,7 +33,9 @@ public class MainControler {
                 "\n 4.         Show information Custumer" +
                 "\n 5.         Add New Booking Resort " +
                 "\n 6.         Show Information Employee " +
-                "\n 7.         Exit");
+                "\n 7.         Show ticket Employee " +
+                "\n 8.         Tim Ho So Employee " +
+                "\n 9.         Exit");
         Scanner sc = new Scanner(System.in);
         chooseService(sc.nextInt());
     }
@@ -54,9 +56,17 @@ public class MainControler {
                 break;
             case 5:
                 addNewBooking();
+                break;
             case 6:
                 showInfomationeEmployee();
+                break;
             case 7:
+                buyTicket();
+                break;
+            case 8:
+                timHoSo();
+                break;
+            case 9:
                 System.exit(0);
             default:
                 System.out.println("Chọn lại ");
@@ -77,8 +87,8 @@ public class MainControler {
         System.out.println("Select Custumer");
         // select custumer
         int select = new Scanner(System.in).nextInt();
-        while (select<0 || select> arrCustomer.size()){
-            System.out.println(" select >0 Vaf select <"+arrCustomer.size());
+        while (select <= 0 || select > arrCustomer.size()) {
+            System.out.println(" select >0 Va select <=" + arrCustomer.size());
             select = new Scanner(System.in).nextInt();
         }
         // setService cho Custumer
@@ -102,7 +112,7 @@ public class MainControler {
                 "\n3, Booking Room");
         Scanner sc = new Scanner(System.in);
         int chooseTypeService = sc.nextInt();
-        while (chooseTypeService <0 || chooseTypeService >3){
+        while (chooseTypeService <= 0 || chooseTypeService > 3) {
             System.out.println("Chon lai di");
             chooseTypeService = sc.nextInt();
         }
@@ -110,10 +120,23 @@ public class MainControler {
         System.out.println("Select service booking");
         int choose = sc.nextInt();
         if (chooseTypeService == 1) {
+            // choose phải nằm trong khoảng size arraylist
+            while (choose <= 0 || choose > CSVWriter.readCsvFileToVilla().size()) {
+                System.out.println("Chon lai di");
+                choose = sc.nextInt();
+            }
             customer.setServices(CSVWriter.readCsvFileToVilla().get(choose - 1));
         } else if (chooseTypeService == 2) {
+            while (choose <= 0 || choose > CSVWriter.readCsvFileToHouse().size()) {
+                System.out.println("Chon lai di");
+                choose = sc.nextInt();
+            }
             customer.setServices(CSVWriter.readCsvFileToHouse().get(choose - 1));
         } else if (chooseTypeService == 3) {
+            while (choose <= 0 || choose > CSVWriter.readCsvFileToRoom().size()) {
+                System.out.println("Chon lai di");
+                choose = sc.nextInt();
+            }
             customer.setServices(CSVWriter.readCsvFileToRoom().get(choose - 1));
         } else {
             System.out.println("Chon sai");
@@ -284,26 +307,26 @@ public class MainControler {
         }
     }
 
-    public void showVillaNotDuplicate(){
-        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Villa.csv");
-        for (String name : nameVilla ) {
-            System.out.println(" "+name);
+    public void showVillaNotDuplicate() {
+        TreeSet<String> nameVilla = CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Villa.csv");
+        for (String name : nameVilla) {
+            System.out.println(" " + name);
         }
         new Scanner(System.in).nextLine();
     }
 
-    public void showHouseNotDuplicate(){
-        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/House.csv");
-        for (String name : nameVilla ) {
-            System.out.println(" "+name);
+    public void showHouseNotDuplicate() {
+        TreeSet<String> nameVilla = CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/House.csv");
+        for (String name : nameVilla) {
+            System.out.println(" " + name);
         }
         new Scanner(System.in).nextLine();
     }
 
-    public void showRoomNotDuplicate(){
-        TreeSet<String> nameVilla= CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Room.csv");
-        for (String name : nameVilla ) {
-            System.out.println(" "+name);
+    public void showRoomNotDuplicate() {
+        TreeSet<String> nameVilla = CSVWriter.showNameServiceNotDuplicate("src/FuramaResort/Data/Room.csv");
+        for (String name : nameVilla) {
+            System.out.println(" " + name);
         }
         new Scanner(System.in).nextLine();
     }
@@ -481,17 +504,19 @@ public class MainControler {
         }
     }
 
-    public void showInfomationeEmployee(){
-        Employee employee1 = new Employee("NV01","Ha",40,"Quang Binh");
-        Employee employee2 = new Employee("NV02","Ha1",40,"Quang Binh");
-        Employee employee3 = new Employee("NV03","Ha2",40,"Quang Binh");
-        Employee employee4 = new Employee("NV04","Ha3",40,"Quang Binh");
-        Employee employee5 = new Employee("NV05","Ha4",40,"Quang Binh");
-        Employee employee6 = new Employee("NV06","Ha5",40,"Quang Binh");
-        Employee employee7 = new Employee("NV07","Ha6",40,"Quang Binh");
-        Employee employee8 = new Employee("NV08","Ha7",40,"Quang Binh");
-        Employee employee9 = new Employee("NV09","Ha8",40,"Quang Binh");
-        Employee employee10 = new Employee("NV10","Ha9",40,"Quang Binh");
+    // su dung map
+
+    public void showInfomationeEmployee() {
+        Employee employee1 = new Employee("NV01", "Ha", 40, "Quang Binh");
+        Employee employee2 = new Employee("NV02", "Ha1", 40, "Quang Binh");
+        Employee employee3 = new Employee("NV03", "Ha2", 40, "Quang Binh");
+        Employee employee4 = new Employee("NV04", "Ha3", 40, "Quang Binh");
+        Employee employee5 = new Employee("NV05", "Ha4", 40, "Quang Binh");
+        Employee employee6 = new Employee("NV06", "Ha5", 40, "Quang Binh");
+        Employee employee7 = new Employee("NV07", "Ha6", 40, "Quang Binh");
+        Employee employee8 = new Employee("NV08", "Ha7", 40, "Quang Binh");
+        Employee employee9 = new Employee("NV09", "Ha8", 40, "Quang Binh");
+        Employee employee10 = new Employee("NV10", "Ha9", 40, "Quang Binh");
         Map<String, Employee> map = new HashMap<String, Employee>();
         map.put(employee1.getId(), employee1);
         map.put(employee2.getId(), employee2);
@@ -508,9 +533,60 @@ public class MainControler {
         for (String key : set) {
             System.out.println(key + " " + map.get(key).getNameEmployee());
         }
-        new Scanner(System.in).nextLine()   ;
+        new Scanner(System.in).nextLine();
     }
 
-    public void buyTicket(){
+    public void buyTicket() {
+        Employee employee1 = new Employee("NV01", "Ha", 40, "Quang Binh");
+        Employee employee2 = new Employee("NV02", "Ha1", 40, "Quang Binh");
+        Employee employee3 = new Employee("NV03", "Ha2", 40, "Quang Binh");
+        Employee employee4 = new Employee("NV04", "Ha3", 40, "Quang Binh");
+        Employee employee5 = new Employee("NV05", "Ha4", 40, "Quang Binh");
+        Employee employee6 = new Employee("NV06", "Ha5", 40, "Quang Binh");
+        Employee employee7 = new Employee("NV07", "Ha6", 40, "Quang Binh");
+        Employee employee8 = new Employee("NV08", "Ha7", 40, "Quang Binh");
+        Employee employee9 = new Employee("NV09", "Ha8", 40, "Quang Binh");
+        Employee employee10 = new Employee("NV10", "Ha9", 40, "Quang Binh");
+        Queue<Employee> myTicket = new LinkedList<Employee>();
+        // offer(E): Crèn thêm phần tử vào hàng đợi (queue).
+        // Với hàng đợi LinkedList phần tử sẽ được trèn vào cuối hàng đợi.
+        // Trả về true nếu trèn thành công.
+        // Trả về false nếu hàng đợi không còn chỗ.
+        myTicket.offer(employee1);
+        myTicket.offer(employee2);
+        myTicket.offer(employee3);
+        myTicket.offer(employee4);
+        myTicket.offer(employee5);
+        myTicket.offer(employee6);
+        myTicket.offer(employee7);
+        myTicket.offer(employee8);
+        myTicket.offer(employee9);
+        myTicket.offer(employee10);
+        while (!myTicket.isEmpty()) {
+            System.out.println(myTicket.remove().getNameEmployee() + "1");
+        }
+        new Scanner(System.in).nextLine();
+    }
+
+    // task 10
+    public void timHoSo() {
+        Employee employee1 = new Employee("NV01", "Ha", 40, "Quang Binh");
+        Employee employee2 = new Employee("NV02", "Ha1", 40, "Quang Binh");
+        Employee employee3 = new Employee("NV03", "Ha2", 40, "Quang Binh");
+        Employee employee4 = new Employee("NV04", "Ha3", 40, "Quang Binh");
+        Employee employee5 = new Employee("NV05", "Ha4", 40, "Quang Binh");
+        Employee employee6 = new Employee("NV06", "Ha5", 40, "Quang Binh");
+        Employee employee7 = new Employee("NV07", "Ha6", 40, "Quang Binh");
+        Employee employee8 = new Employee("NV08", "Ha7", 40, "Quang Binh");
+        Employee employee9 = new Employee("NV09", "Ha8", 40, "Quang Binh");
+        Employee employee10 = new Employee("NV10", "Ha9", 40, "Quang Binh");
+        TuHoSo tuHoSo = new TuHoSo();
+        tuHoSo.hoSo = new Stack<>();
+        tuHoSo.hoSo.push(employee1);
+        tuHoSo.hoSo.push(employee2);
+        tuHoSo.hoSo.push(employee3);
+        while (!tuHoSo.hoSo.isEmpty()) {
+            System.out.println(tuHoSo.hoSo.pop().getNameEmployee());
+        }
     }
 }

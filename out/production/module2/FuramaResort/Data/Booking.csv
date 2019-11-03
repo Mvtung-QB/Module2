@@ -3,3 +3,4 @@ id,nameCustumer,gender,birtherday,idCard,phoneNumber,email,loại,address,typeSe
 36ebdd63923d4083bd28cf5333503ad8,Tung Qb,Male,19/8/1992,192872635,726534212,TungQB123@gmail.com,Vip,Quang Binh,House SV,My House,100.0,5,10
 36ebdd63923d4083bd28cf5333503ad8,Binh Qb,Male,19/8/1992,192872635,726534212,TungQB123@gmail.com,Vip,Quang Binh,Room Sv,My Room,50.0,2,3
 36ebdd63923d4083bd28cf5333503ad8,An Qb,Female,19/8/1992,192872635,726534212,TungQB123@gmail.com,Vip,Quang Binh,House SV,My House,100.0,5,10
+36ebdd63923d4083bd28cf5333503ad8,Dung Qb,Unknow,19/8/1992,192872635,726534212,TungQB123@gmail.com,Vip,Quang Binh,Villa Sv,My Villa,40.0,3,10
