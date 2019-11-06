@@ -143,8 +143,44 @@ insert into tblDichVu(tenDichVu,dientich,soTang,SoNguoiToiDa,ChiPhiThue,IdloaiDi
 ('My service', 100,5,10,5000000,1,1,'full'),
 ('My Room2', 100,5,10,5000000,3,1,'full');
 
+insert into tblHopdong(iDNhanVien,idKhachHang,idDichVu,NgayLamHopDong,NgayKetThuc,TienDatcoc) value
+(1, 1,2,'2018/5/2','2018/5/6',2000000),
+(3, 2,1,'2019/6/2','2019/6/6',2000000),
+(1, 3,2,'2018/7/2','2018/7/6',2000000),
+(2, 1,3,'2019/8/2','2019/8/6',2000000),
+(4, 4,2,'2019/9/2','2019/9/6',2000000);
+
+insert into tblHopdongChiTiet(IdHopDong,idDichVuDiKem,SoLuong) value (1,1,2),(2,3,2),(3,2,1),(1,3,2),(3,4,4),(1,4,2),(3,1,2);
+--------------------------------------------------------------------------------------------------------------------
 -- task2 	Hiển thị thông tin của tất cả nhân viên có trong hệ thống có tên bắt đầu là một trong các ký tự “H”, “T” hoặc “K” và có tối đa 15 ký tự.
 select * from tblnhanVien where (hoten like 'H%' or hoten like 'K%' or hoten like 'T%') and length(hoten)<15;
 
 -- task3 	Hiển thị thông tin của tất cả khách hàng có độ tuổi từ 18 đến 50 tuổi và có địa chỉ ở “Đà Nẵng” hoặc “Quảng Trị”.
 select * from tblKhachHang where ngaySinh>"1970/1/1" and ngaySinh < "2001/1/1" and (DiaChi = 'Đà Nẵng' or DiaChi = 'Quảng Trị');
+
+-- task4  4.	Đếm xem tương ứng với mỗi khách hàng đã từng đặt phtblhopdongòng bao nhiêu lần.
+			--  Kết quả hiển thị được sắp xếp tăng dần theo số lần đặt phòng của khách hàng. 
+			-- Chỉ đếm những khách hàng nào có Tên loại khách hàng là “Diamond”.
+
+select hoten,tenloaiKhach ,count(tblHopDong.idKhachHang) as 'Số Lần đặt' FROM tblKhachHang
+inner join tblHopDong on tblKhachHang.idKhachHang = tblHopDong.idKhachHang
+inner join tblLoaiKhach on tblKhachHang.idLoaiKhach = tblLoaiKhach.idLoaiKhach
+where tenLoaiKhach = 'Diamond'
+group by hoten
+order by tblHopDong.idKhachHang asc;
+
+-- task5.	Hiển thị IDKhachHang, HoTen, TenLoaiKhach, IDHopDong, TenDichVu, NgayLamHopDong, NgayKetThuc,
+-- TongTien (Với TongTien được tính theo công thức như sau: ChiPhiThue + SoLuong*Gia, 
+-- với SoLuong và Giá là từ bảng DichVuDiKem) cho tất cả các Khách hàng đã từng đặt phỏng.
+-- (Những Khách hàng nào chưa từng đặt phòng cũng phải hiển thị ra).
+select tblKhachHang.idKhachHang,hoTen,TenLoaiKhach,IdHopDong,tendichVu,ngayLamHopDong,NgayKetThuc,tongTien=(ChiPhiThue + SoLuong*Gia)
+from tblKhachHang
+left join tblHopDong on tblKhachHang.idKhachHang = tblHopDong.idKhachHang
+left join tblLoaiKhach on tblKhachHang.idLoaiKhach= tblLoaiKhach.idLoaiKhach
+left join tblDichVu on tblDichVu.IDdichVu = tblHopDong.idDichVu
+
+
+
+
+
+
