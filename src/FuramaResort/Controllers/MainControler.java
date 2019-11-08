@@ -585,8 +585,25 @@ public class MainControler {
         tuHoSo.hoSo.push(employee1);
         tuHoSo.hoSo.push(employee2);
         tuHoSo.hoSo.push(employee3);
-        while (!tuHoSo.hoSo.isEmpty()) {
-            System.out.println(tuHoSo.hoSo.pop().getNameEmployee());
+        tuHoSo.hoSo.push(employee4);
+        tuHoSo.hoSo.push(employee5);
+        tuHoSo.hoSo.push(employee6);
+        tuHoSo.hoSo.push(employee7);
+        TuHoSo newTuHoSo = new TuHoSo();
+        newTuHoSo = tuHoSo;
+        System.out.println("Nhap ten can tim");
+        String name = new Scanner(System.in).nextLine();
+        int n = 0;
+        while (!newTuHoSo.hoSo.isEmpty()) {
+            Employee newEmployee = new Employee();
+            newEmployee = newTuHoSo.hoSo.pop();
+            if (newEmployee.getNameEmployee().equals(name)) {
+                n += 1;
+                System.out.println(newEmployee.toString());
+                break;
+            }
+
         }
+        if (n == 0) System.out.println("Khong co");
     }
 }
