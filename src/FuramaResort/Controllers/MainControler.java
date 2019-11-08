@@ -549,7 +549,7 @@ public class MainControler {
         Employee employee10 = new Employee("NV10", "Ha9", 40, "Quang Binh");
         Queue<Employee> myTicket = new LinkedList<Employee>();
         // offer(E): Crèn thêm phần tử vào hàng đợi (queue).
-        // Với hàng đợi LinkedList phần tử sẽ được trèn vào cuối hàng đợi.
+        // Với hàng đợi LinkedList phần tử sẽ được Chèn vào cuối hàng đợi.
         // Trả về true nếu trèn thành công.
         // Trả về false nếu hàng đợi không còn chỗ.
         myTicket.offer(employee1);
